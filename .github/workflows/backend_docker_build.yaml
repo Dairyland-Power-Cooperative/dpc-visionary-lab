@@ -18,7 +18,7 @@ jobs:
       - name: Login to Azure Container Registry
         uses: azure/docker-login@v1
         with:
-          login-server: aigbbemea.azurecr.io
+          login-server: dpcvoltvision.azurecr.io
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
       - name: Build and push Docker image
@@ -28,5 +28,5 @@ jobs:
           file: ./backend/Dockerfile
           push: true
           tags: |
-            aigbbemea.azurecr.io/visionarylab:${{ github.run_number }}
-            aigbbemea.azurecr.io/visionarylab:latest
+            dpcvoltvision.azurecr.io/visionarylab:${{ github.run_number }}
+            dpcvoltvision.azurecr.io/visionarylab:latest

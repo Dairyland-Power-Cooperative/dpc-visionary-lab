@@ -40,8 +40,8 @@ param SORA_AOAI_API_KEY string
 
 
 // Parameters for the Docker images for the backend and frontend container apps
-param DOCKER_IMAGE_BACKEND string = 'aigbbemea.azurecr.io/visionarylab-video:latest'
-param DOCKER_IMAGE_FRONTEND string = 'aigbbemea.azurecr.io/visionarylab-frontend-video:latest'
+param DOCKER_IMAGE_BACKEND string = 'dpcvoltvision.azurecr.io/visionarylab-video:latest'
+param DOCKER_IMAGE_FRONTEND string = 'dpcvoltvision.azurecr.io/visionarylab-frontend-video:latest'
 param API_PROTOCOL string = ''
 param API_HOSTNAME string = ''
 param API_PORT string = ''
