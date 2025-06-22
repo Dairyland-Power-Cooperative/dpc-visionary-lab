@@ -12,8 +12,8 @@ param location string = resourceGroup().location
 @description('Name of the Container App Environment')
 param containerAppEnvName string = 'visionary-lab-container-env'
 @description('Name of the Container App')
-param containerAppNameBackend string = 'visionary-lab-backend'
-param containerAppNameFrontend string = 'visionary-lab-frontend'
+param containerAppNameBackend string = 'visionarylab'
+param containerAppNameFrontend string = 'visionarylab-frontend'
 // Parameters for the Log Analytics workspace
 param logAnalyticsWorkspaceName string = 'visionary-lab-log-analytics-workspace'
 
@@ -38,13 +38,17 @@ param LLM_AOAI_API_KEY string
 @secure()
 param SORA_AOAI_API_KEY string
 
-
 // Parameters for the Docker images for the backend and frontend container apps
-param DOCKER_IMAGE_BACKEND string = 'dpcvoltvision.azurecr.io/visionarylab-video:latest'
-param DOCKER_IMAGE_FRONTEND string = 'dpcvoltvision.azurecr.io/visionarylab-frontend-video:latest'
+param DOCKER_IMAGE_BACKEND string = 'dpcvoltvision.azurecr.io/visionarylab:latest'
+param DOCKER_IMAGE_FRONTEND string = 'dpcvoltvision.azurecr.io/visionarylab-frontend:latest'
 param API_PROTOCOL string = ''
 param API_HOSTNAME string = ''
 param API_PORT string = ''
+
+// ACR credentials
+param ACR_USERNAME string
+@secure()
+param ACR_PASSWORD string
 
 // Azure Storage Account
 module storageAccountMod './modules/storageAccount.bicep' = {
@@ -142,9 +146,13 @@ module containerAppBackend './modules/containerApp.bicep' = {
     SORA_AOAI_RESOURCE: soraOpenAiAccountName
     SORA_DEPLOYMENT: soraDeploymentName
     SORA_AOAI_API_KEY: SORA_AOAI_API_KEY
+    ACR_USERNAME: ACR_USERNAME
+    ACR_PASSWORD: ACR_PASSWORD
+    tags: {
+      'azd-service-name': 'backend'
+    }
   }
   dependsOn: [
-    storageAccountMod
     storageContainerMod
   ]
 }
@@ -171,9 +179,13 @@ module containerAppFrontend './modules/containerApp.bicep' = {
     API_PROTOCOL: API_PROTOCOL == '' ? 'https' : API_PROTOCOL
     API_PORT: API_PORT == '' ? '443' : API_PORT
     API_HOSTNAME: API_HOSTNAME == '' ? '${containerAppNameBackend}.${containerAppEnvMod.outputs.containerAppDefaultDomain}' : API_HOSTNAME
+    ACR_USERNAME: ACR_USERNAME
+    ACR_PASSWORD: ACR_PASSWORD
+    tags: {
+      'azd-service-name': 'frontend'
+    }
   }
   dependsOn: [
-    storageAccountMod
     storageContainerMod
   ]
 }

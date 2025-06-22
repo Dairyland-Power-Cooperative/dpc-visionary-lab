@@ -2,5 +2,62 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "containerAppEnvName": {
+      "value": "dpc-voltvision-container-env"
+    },
+    "containerAppNameBackend": {
+      "value": "dpc-voltvision-backend"
+    },
+    "containerAppNameFrontend": {
+      "value": "dpc-voltvision-frontend"
+    },
+    "logAnalyticsWorkspaceName": {
+      "value": "dpc-voltvision-log-analytics-workspace"
+    },
+    "llmOpenAiAccountName": {
+      "value": "vladi-m9z3owzv-westus3"
+    },
+    "llmDeploymentName": {
+      "value": "gpt-4.1"
+    },
+    "llmModelType": {
+      "value": "gpt-4.1"
+    },
+    "imageGenOpenAiAccountName": {
+      "value": "myOpenAiAccount"
+    },
+    "imageGenDeploymentName": {
+      "value": "gpt-image-1"
+    },
+    "imageGenModelType": {
+      "value": "gpt-image-1"
+    },
+    "soraOpenAiAccountName": {
+      "value": "myOpenAiAccount"
+    },
+    "soraDeploymentName": {
+      "value": "sora"
+    },
+    "DOCKER_IMAGE_BACKEND": {
+      "value": "dpcvoltvision.azurecr.io/visionarylab:latest"
+    },
+    "DOCKER_IMAGE_FRONTEND": {
+      "value": "dpcvoltvision.azurecr.io/visionarylab-frontend:latest"
+    },
+    "API_PROTOCOL": {
+      "value": "https"
+    },
+    "API_HOSTNAME": {
+      "value": ""
+    },
+    "API_PORT": {
+      "value": "80"
+    },
+    "ACR_USERNAME": {
+      "value": "dpcvoltvision"
+    },
+    "ACR_PASSWORD": {
+      "value": "dummy"
+    }
   }
 }

@@ -26,15 +26,24 @@ param AZURE_BLOB_SERVICE_URL string
 param AZURE_STORAGE_ACCOUNT_NAME string
 param AZURE_STORAGE_ACCOUNT_KEY string
 param AZURE_BLOB_IMAGE_CONTAINER string = 'images'
+// Azure Container Registry
+param ACR_SERVER string = 'dpcvoltvision.azurecr.io'
+param ACR_USERNAME string
+@secure()
+param ACR_PASSWORD string
 
 param targetPort int = 80
 param API_PROTOCOL string = 'http'
 param API_HOSTNAME string = 'localhost'
 param API_PORT string = '80'
 
+@description('Tags to apply to the container app')
+param tags object = {}
+
 resource containerApp 'Microsoft.App/containerApps@2022-03-01' = if(deployNew) {
   name: containerAppName
   location: location
+  tags: tags
   properties: {
     managedEnvironmentId: containerAppEnvId
     configuration: {
@@ -42,6 +51,19 @@ resource containerApp 'Microsoft.App/containerApps@2022-03-01' = if(deployNew) {
         external: true
         targetPort: targetPort
       }
+      registries: [
+        {
+          server: ACR_SERVER
+          username: ACR_USERNAME
+          passwordSecretRef: 'acr-password'
+        }
+      ]
+      secrets: [
+        {
+          name: 'acr-password'
+          value: ACR_PASSWORD
+        }
+      ]
     }
     template: {
       containers: [
