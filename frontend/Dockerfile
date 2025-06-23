@@ -7,7 +7,7 @@ FROM base AS deps
 WORKDIR /app
 
 # Add package manager to the path
-ENV PATH /app/node_modules/.bin:$PATH
+ENV PATH=/app/node_modules/.bin:$PATH
 
 # Install dependencies needed for node-gyp
 RUN apk add --no-cache libc6-compat
@@ -25,7 +25,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # Set environment variables for telemetry
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_TELEMETRY_DISABLED=0
 
 # Set placeholder values for environment variables that will be replaced at runtime
 ENV NEXT_PUBLIC_API_PROTOCOL=__NEXT_PUBLIC_API_PROTOCOL__
@@ -40,8 +40,8 @@ RUN npm run build
 FROM base AS runner
 WORKDIR /app
 
-ENV NODE_ENV production
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs

@@ -391,7 +391,9 @@ export default function SettingsPage() {
                   <div className="py-8 text-center text-muted-foreground">
                     <AlertCircle className="h-8 w-8 mx-auto mb-4 text-red-500" />
                     <p>Failed to connect to the API.</p>
-                    <p className="text-sm mt-1">Check if the API server is running at http://127.0.0.1:8000</p>
+                    <p className="text-sm mt-1">
+                      Check if the API server is running at {process.env.NEXT_PUBLIC_API_PROTOCOL || 'http'}://{process.env.NEXT_PUBLIC_API_HOSTNAME || '127.0.0.1'}:{process.env.NEXT_PUBLIC_API_PORT || '8000'}
+                    </p>
                   </div>
                 )}
               </CardContent>
@@ -401,4 +403,4 @@ export default function SettingsPage() {
       </div>
     </FadeScaleTransition>
   );
-} 
+}
