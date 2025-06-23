@@ -27,6 +27,8 @@ jobs:
           context: .
           file: ./backend/Dockerfile
           push: true
+          build-args: |
+            INSTALL_EXTRA_DEPS=true
           tags: |
             dpcvoltvision.azurecr.io/visionarylab:${{ github.run_number }}
             dpcvoltvision.azurecr.io/visionarylab:latest

@@ -10,7 +10,16 @@ services:
         language: ts
         docker:
             path: Dockerfile
+    backend:
+        project: backend
+        host: containerapp
+        language: python
+        docker:
+            path: Dockerfile
 resources:
     frontend:
         type: host.containerapp
         port: 3000
+    backend:
+        type: host.containerapp
+        port: 80

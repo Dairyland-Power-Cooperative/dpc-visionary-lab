@@ -21,6 +21,8 @@ ENV UV_LINK_MODE=copy \
 WORKDIR /app
 
 COPY uv.lock pyproject.toml /app/
+# Install critical packages directly to ensure they're available
+RUN pip install python-json-logger opencensus-ext-azure opencensus-ext-logging opencensus-ext-fastapi psutil
 RUN uv sync \
     --frozen \
     --no-dev \

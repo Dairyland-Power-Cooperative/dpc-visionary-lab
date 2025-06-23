@@ -1,6 +1,9 @@
 # Use Python 3.12 slim image
 FROM python:3.12-slim
 
+# Define build arguments
+ARG INSTALL_EXTRA_DEPS=false
+
 # Install system dependencies needed for OpenCV
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libgl1-mesa-glx \
@@ -20,7 +23,17 @@ WORKDIR /app
 # but pyproject.toml in the root, we need to set PYTHONPATH
 ENV PYTHONPATH=/app
 
+# Install critical dependencies first to ensure they're available
+# These packages are sometimes missed during the UV sync process
+RUN pip install python-json-logger opencensus-ext-azure opencensus-ext-logging opencensus-ext-fastapi psutil
+
+# Install all dependencies from pyproject.toml
 RUN uv sync --frozen --no-cache
+
+# Add another explicit installation to ensure packages are installed properly
+RUN if [ "$INSTALL_EXTRA_DEPS" = "true" ]; then \
+    pip install --no-cache-dir python-json-logger opencensus-ext-azure opencensus-ext-logging opencensus-ext-fastapi psutil ; \
+    fi
 
 # Add the virtual environment to PATH
 ENV PATH="/app/.venv/bin:${PATH}"
