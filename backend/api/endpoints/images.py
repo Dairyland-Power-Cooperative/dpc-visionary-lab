@@ -43,9 +43,8 @@ from backend.core.instructions import analyze_image_system_message, img_prompt_e
 
 router = APIRouter()
 
-# Set up logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+# Import enhanced logger
+from backend.api.endpoints.images_logger import logger
 
 
 def normalize_filename(filename: str) -> str:

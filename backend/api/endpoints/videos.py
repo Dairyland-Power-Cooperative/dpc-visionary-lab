@@ -31,9 +31,8 @@ from backend.models.videos import (
     VideoPromptEnhancementResponse,
 )
 
-# Set up logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+# Import enhanced logger
+from backend.api.endpoints.videos_logger import logger
 
 # Log video directory setting
 logger.info(f"Video directory: {settings.VIDEO_DIR}")

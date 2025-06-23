@@ -67,6 +67,19 @@ class Settings(BaseSettings):
     GPT_IMAGE_ALLOW_TRANSPARENT: bool = True
     # Max file size in MB for image uploads
     GPT_IMAGE_MAX_FILE_SIZE_MB: int = 25
+    
+    # Environment and Logging Settings
+    ENVIRONMENT: str = "development"  # development, staging, production
+    LOG_LEVEL: str = "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+    APPLICATION_INSIGHTS_CONNECTION_STRING: Optional[str] = None
+    ENABLE_AZURE_MONITOR: bool = False
+    LOG_TO_FILE: bool = False
+    LOG_FILE_PATH: str = "./logs/app.log"
+    
+    # Request/Response Logging
+    ENABLE_REQUEST_LOGGING: bool = True
+    ENABLE_RESPONSE_LOGGING: bool = True
+    SENSITIVE_HEADERS: List[str] = ["Authorization", "Cookie", "api-key"]
 
     class Config:
         env_file = "../.env"
